@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PickemController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -8,7 +9,6 @@ use Illuminate\Support\Facades\Route;
 // healthcheck
 Route::get('/ping', fn() => response()->json(['message' => 'pong']));
 
-// LOGIN → zwraca Bearer token
 Route::post('/login', function (Request $request) {
     $data = $request->validate([
         'email' => ['required','email'],
@@ -22,7 +22,6 @@ Route::post('/login', function (Request $request) {
         return response()->json(['message' => 'Invalid credentials'], 422);
     }
 
-    // opcjonalnie: usuń stare tokeny tego samego „urządzenia”
     // $user->tokens()->where('name','web')->delete();
 
     $token = $user->createToken('web')->plainTextToken;
@@ -33,7 +32,6 @@ Route::post('/login', function (Request $request) {
     ]);
 });
 
-// chronione endpointy (wymagają Authorization: Bearer <token>)
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', fn(Request $r) => response()->json($r->user()));
 
@@ -41,4 +39,7 @@ Route::middleware('auth:sanctum')->group(function () {
         $request->user()->currentAccessToken()?->delete();
         return response()->json(['message' => 'Logged out']);
     });
+
+    Route::apiResource('pickems', PickemController::class);
+    Route::get('pickems/{pickem}/games', [PickemController::class, 'games'])->name('pickems.games');
 });
