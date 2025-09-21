@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\StorePickemRequest;
 use App\Http\Requests\UpdatePickemRequest;
 use App\Models\Pickem;
@@ -60,5 +61,14 @@ class PickemController extends Controller
     public function games(Pickem $pickem)
     {
         return response()->json($pickem->games(), 200);
+    }
+
+    /**
+     * Pickem add game.
+     */
+    public function storeGame(Pickem $pickem, StoreGameRequest $request)
+    {
+        $game = $pickem->games()->create($request->validated());
+        return response()->json($game, 201);
     }
 }

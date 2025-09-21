@@ -42,4 +42,5 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::apiResource('pickems', PickemController::class);
     Route::get('pickems/{pickem}/games', [PickemController::class, 'games'])->name('pickems.games');
+    Route::post('pickems/{pickem}/games', [PickemController::class, 'storeGame'])->name('pickems.store.game');
 });
