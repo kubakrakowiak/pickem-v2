@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('desc')->nullable();
             $table->dateTime('ends_at')->nullable()->index();
+            $table->boolean('is_public')->default(false);
             $table->timestamps();
             $table->foreignUuid('user_id')
                       ->nullable()

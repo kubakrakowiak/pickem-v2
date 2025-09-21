@@ -15,7 +15,7 @@ class Pickem extends Model
     protected $keyType = 'string';
 
      protected $fillable = [
-         'name', 'desc'
+         'name', 'desc', 'ends_at', 'is_public', 'user_id'
      ];
 
     public function user()
