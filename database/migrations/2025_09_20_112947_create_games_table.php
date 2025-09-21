@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('team_away');
             $table->integer('score_home')->nullable();
             $table->integer('score_away')->nullable();
+            $table->dateTime('start_at')->nullable()->index();
             $table->timestamps();
 
             $table->foreignUuid('pickem_id')

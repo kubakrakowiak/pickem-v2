@@ -10,7 +10,7 @@ class Game extends Model
      use HasUuid;
 
      protected $fillable = [
-         'team_home', 'team_away', 'score_home', 'score_away', 'pickem_id'
+         'team_home', 'team_away', 'score_home', 'score_away', 'pickem_id', 'start_at'
      ];
 
      public function pickem()
