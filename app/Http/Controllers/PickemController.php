@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CompleteGameRequest;
 use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\StorePickemRequest;
+use App\Http\Requests\UpdateGameRequest;
 use App\Http\Requests\UpdatePickemRequest;
 use App\Models\Pickem;
 
@@ -70,5 +72,33 @@ class PickemController extends Controller
     {
         $game = $pickem->games()->create($request->validated());
         return response()->json($game, 201);
+    }
+
+    /**
+     * Update game.
+     */
+    public function updateGame(Pickem $pickem, Game $game, UpdateGameRequest $request)
+    {
+        if ($game->pickem_id !== $pickem->id) {
+            abort(404);
+        }
+
+        $game->update($request->validated());
+
+        return response()->json($game, 200);
+    }
+
+    /**
+     * Complete the result of a game.
+     */
+    public function completeGame(Pickem $pickem, Game $game, CompleteGameRequest $request)
+    {
+        if ($game->pickem_id !== $pickem->id) {
+            abort(404);
+        }
+
+        $game->update($request->validated());
+
+        return response()->json($game, 200);
     }
 }
