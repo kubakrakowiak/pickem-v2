@@ -7,6 +7,7 @@ use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\StorePickemRequest;
 use App\Http\Requests\UpdateGameRequest;
 use App\Http\Requests\UpdatePickemRequest;
+use App\Models\Game;
 use App\Models\Pickem;
 
 class PickemController extends Controller
@@ -98,6 +99,17 @@ class PickemController extends Controller
         }
 
         $game->update($request->validated());
+
+        return response()->json($game, 200);
+    }
+    /**
+     * Complete the result of a game.
+     */
+    public function showGame(Pickem $pickem, Game $game)
+    {
+        if ($game->pickem_id !== $pickem->id) {
+            abort(404);
+        }
 
         return response()->json($game, 200);
     }
